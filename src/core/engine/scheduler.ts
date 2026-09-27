@@ -69,13 +69,21 @@ export class SessionScheduler {
     this.isPaused = false;
   }
 
-  public stop(reachedClimax: boolean = false) {
+  public destroy() {
     this.isRunning = false;
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
       this.animationFrameId = null;
     }
+  }
+
+  public complete(reachedClimax: boolean = false) {
+    this.destroy();
     this.callbacks.onSessionComplete(Math.round(this.totalElapsedSeconds), this.edgeCount, reachedClimax);
+  }
+
+  public stop(reachedClimax: boolean = false) {
+    this.complete(reachedClimax);
   }
 
   /**

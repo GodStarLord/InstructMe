@@ -72,7 +72,7 @@ export const SessionScreen: React.FC<SessionScreenProps> = ({
     scheduler.start();
 
     return () => {
-      scheduler.stop();
+      scheduler.destroy();
       screenWakeLock.release();
     };
   }, [config]);
@@ -112,7 +112,7 @@ export const SessionScreen: React.FC<SessionScreenProps> = ({
   };
 
   const handleEndEarly = () => {
-    schedulerRef.current?.stop(false);
+    schedulerRef.current?.complete(false);
   };
 
   const getPhaseBadge = () => {
@@ -240,7 +240,7 @@ export const SessionScreen: React.FC<SessionScreenProps> = ({
         onTogglePause={handleTogglePause}
         onToggleMute={handleToggleMute}
         onOpenWiki={onOpenWiki}
-        onEndSession={() => schedulerRef.current?.stop(true)}
+        onEndSession={() => schedulerRef.current?.complete(true)}
       />
 
       {/* Post-Session Summary & Rating Modal */}
